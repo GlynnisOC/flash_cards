@@ -11,7 +11,10 @@ attr_reader :guess, :card, :category
   end
 
   def correct?
-    guess == Card.answer
+    @guess == Card.answer
+    #no idea why when test runs it fails for no method for
+    #answer for the Card class esp. since the test file
+    #requires the card file 
   end
 # feedback is calling on the correct?
 # method defined above and will return
