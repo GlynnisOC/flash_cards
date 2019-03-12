@@ -5,38 +5,35 @@ require './lib/turn'
 
 class TurnTest < Minitest::Test
 
+  def setup
+    @card = Card.new("What is the capital of Alaska?", "Juneau", :Geography)
+    @turn = Turn.new("Juneau", @card)
+    @card_2 = Card.new("Which planet is closest to the sun?", "Mercury", :STEM)
+    @turn_2 = Turn.new("Saturn", @card_2)
+  end
+
   def test_it_exists
-    card = Card.new("What is the capital of Alaska?", "Juneau", :Geography)
-    turn = Turn.new("What is the capital of Alaska?", "Juneau", :Geography)
-
-    assert_instance_of Turn, turn
+    assert_instance_of Turn, @turn
   end
 
-  def test_it_has_a_guess
-    card = Card.new("What is the capital of Alaska?", "Juneau", :Geography)
-    turn = Turn.new("What is the capital of Alaska?", "Juneau", :Geography)
-
-    assert_equal "What is the capital of Alaska?", turn.guess
+  def test_it_returns_the_card
+    assert_equal @card, @turn.card
   end
 
-  def test_it_shows_a_card
-    card = Card.new("What is the capital of Alaska?", "Juneau", :Geography)
-    turn = Turn.new("What is the capital of Alaska?", "Juneau", :Geography)
-
-    assert_equal "Juneau", turn.card
+  def test_it_returns_the_guess
+    assert_equal "Juneau", @turn.guess
   end
 
-  def test_is_guess_correct
-    card = Card.new("What is the capital of Alaska?", "Juneau", :Geography)
-    turn = Turn.new("What is the capital of Alaska?", "Juneau", :Geography)
-
-    assert_equal "Juneau", turn.correct?
+  def test_it_returns_if_guess_is_correct_or_not
+    assert_equal true, @turn.correct?
+    assert_equal false, @turn_2.correct?
   end
 
-  def test_letting_you_know_if_correct_or_not
-    card = Card.new("What is the capital of Alaska?", "Juneau", :Geography)
-    turn = Turn.new("What is the capital of Alaska?", "Juneau", :Geography)
+  def test_it_provides_feedback
+    assert_equal "Correct!", @turn.feedback
+  end
 
-    assert_equal "Incorrect", turn.feedback
+  def test_it_provides_incorrect_when_false
+    assert_equal "Incorrect!", @turn_2.feedback
   end
 end
