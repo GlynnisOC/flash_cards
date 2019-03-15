@@ -17,7 +17,7 @@ class Round
     @turns << new_turn
     new_turn
   end
-  # require 'pry'; binding.pry
+
   def number_correct
     correct = 0
     incorrect = 0
@@ -31,4 +31,15 @@ class Round
     correct
   end
 
+  # require 'pry'; binding.pry
+  def number_correct_by_category(category)
+    correct_by_cat = 0
+    incorrect_by_cat = 0
+    if @deck.cards_in_category(category)
+      correct_by_cat += 1
+    else
+      incorrect_by_cat += 1
+    end
+    correct_by_cat
+  end
 end

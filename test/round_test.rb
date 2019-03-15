@@ -52,26 +52,24 @@ class RoundTest < Minitest::Test
     assert_equal @card_2, @round.current_card
   end
 
-  def test_it_returns_correct_amount_turns_taken
+  def test_it_returns_correct_amount_turns_taken_feedback_and_how_many_correct
     new_turn = @round.take_turn("Juneau")
     next_turn = @round.take_turn("Venus")
     assert_equal 2, @round.turns.count
+    assert_equal "Incorrect!", @round.turns.last.feedback
+    assert_equal 1, @round.number_correct
+  end
+
+  def test_it_returns_number_correct_by_category
+    new_turn = @round.take_turn("Juneau")
+    next_turn = @round.take_turn("Venus")
+    assert_equal 1, @round.number_correct_by_category(:Geography)
+    assert_equal 0, @round.number_correct_by_category(:STEM)
   end
 end
 # require 'pry'; binding.pry
 
-# pry(main)> round.turns.last.feedback
-# #=> "Incorrect."
-#
-# pry(main)> round.number_correct
-# #=> 1
-#
-# pry(main)> round.number_correct_by_category(:Geography)
-# #=> 1
-#
-# pry(main)> round.number_correct_by_category(:STEM)
-# #=> 0
-#
+
 # pry(main)> round.percent_correct
 # #=> 50.0
 #
