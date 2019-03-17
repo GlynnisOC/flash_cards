@@ -61,20 +61,27 @@ class RoundTest < Minitest::Test
   end
 
   def test_it_returns_number_correct_by_category
-    new_turn = @round.take_turn("Juneau")
-    next_turn = @round.take_turn("Venus")
+    @round.take_turn("Juneau")
+    @round.take_turn("Venus")
     assert_equal 1, @round.number_correct_by_category(:Geography)
     assert_equal 0, @round.number_correct_by_category(:STEM)
   end
+
+  def test_it_returns_percentage_correct
+    @round.take_turn("Juneau")
+    @round.take_turn("Venus")
+    assert_equal 50.0, @round.percent_correct
+  end
+
+  def test_it_returns_percentage_correct_by_category
+    @round.take_turn("Juneau")
+    @round.take_turn("Venus")
+    assert_equal 100.0, @round.percent_correct_by_category(:Geography)
+  end
+
+  def test_it_shuffled_through_to_card_three
+    @round.take_turn("Juneau")
+    @round.take_turn("Venus")
+    assert_equal @card_3, @round.current_card
+  end
 end
-# require 'pry'; binding.pry
-
-
-# pry(main)> round.percent_correct
-# #=> 50.0
-#
-# pry(main)> round.percent_correct_by_category(:Geography)
-# #=> 100.0
-#
-# pry(main)> round.current_card
-# #=> #<Card:0x00007fa161a136f0 @answer="North north west", @question="Describe in words the exact direction that is 697.5° clockwise from due north?", @category=:STEM>

@@ -31,15 +31,18 @@ class Round
     correct
   end
 
-  # require 'pry'; binding.pry
   def number_correct_by_category(category)
-    correct_by_cat = 0
-    incorrect_by_cat = 0
-    if @deck.cards_in_category(category)
-      correct_by_cat += 1
-    else
-      incorrect_by_cat += 1
-    end
-    correct_by_cat
+    @turns.find_all do |turn|
+      (turn.card.category == category) && (turn.guess == turn.card.answer)
+    end.count
+  end
+
+  def percent_correct
+    ((number_correct.to_f) / (@turns.count)) * 100
+  end
+
+  def percent_correct_by_category(category)
+    number_correct_by_category(category) * 100
   end
 end
+# require 'pry'; binding.pry
